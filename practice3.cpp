@@ -172,4 +172,54 @@ struct QuanLyNhanVien {
 int main() {
     // Khởi tạo các nhân viên lẻ
     NhanVien nvGoc("079123456789", "0901234567", "TP. Ho Chi Minh");
-    NhanVienTheoGio nvGio1("079876543210", "0908765432", "Ha Noi
+    NhanVienTheoGio nvGio1("079876543210", "0908765432", "Ha Noi", 160, 50000);
+    NhanVienTheoThang nvThang1("079987654321", "0909998887", "Da Nang", 15000000, 2000000, 1.2);
+
+    cout << "=== CHI TIET NHAN VIEN BAN DAU ===" << endl;
+    nvGoc.xuatThongTin(); cout << endl;
+    nvGio1.xuatThongTin(); cout << endl;
+    nvThang1.xuatThongTin(); cout << endl;
+
+    // Khởi tạo danh sách
+    NhanVienTheoGio nvGio2("079111111111", "0901111111", "Thua Thien Hue", 100, 60000);
+    NhanVienTheoThang nvThang2("079222222222", "0902222222", "Can Tho", 8000000, 1000000, 0.5);
+
+    NhanVien* danhSachNV[MAX_NHAN_VIEN];
+    int soLuong = 0;
+
+    danhSachNV[soLuong++] = &nvGio1;
+    danhSachNV[soLuong++] = &nvThang1;
+    danhSachNV[soLuong++] = &nvGio2;
+    danhSachNV[soLuong++] = &nvThang2;
+
+    cout << "===========================================" << endl;
+    cout << "Tong quy luong doanh nghiep: " << QuanLyNhanVien::tinhTongNganSach(danhSachNV, soLuong) << " VND" << endl;
+
+    int posMax = QuanLyNhanVien::timIndexCaoNhat(danhSachNV, soLuong);
+    int posMin = QuanLyNhanVien::timIndexThapNhat(danhSachNV, soLuong);
+
+    cout << "\n--- NHAN VIEN THU NHAP CAO NHAT ---" << endl;
+    if (posMax != -1) danhSachNV[posMax]->xuatThongTin();
+
+    cout << "\n--- NHAN VIEN THU NHAP THAP NHAT ---" << endl;
+    if (posMin != -1) danhSachNV[posMin]->xuatThongTin();
+
+    int cntGio = 0, cntThang = 0;
+    QuanLyNhanVien::thongKePhanLoai(danhSachNV, soLuong, cntGio, cntThang);
+    cout << "\nThong ke phan loai: " << cntGio << " Theo Gio | " << cntThang << " Theo Thang" << endl;
+
+    double nguong = 0;
+    cout << "\nNhap nguong luong can loc: ";
+    cin >> nguong;
+    cout << "--- CAC NHAN VIEN CO THU NHAP > " << nguong << " ---" << endl;
+    QuanLyNhanVien::traCuuTheoMucLuong(danhSachNV, soLuong, nguong);
+
+    QuanLyNhanVien::sapXepThuNhapGiamDan(danhSachNV, soLuong);
+    cout << "\n--- DANH SACH THU NHAP GIAM DAN (INSERTION SORT) ---" << endl;
+    for (int i = 0; i < soLuong; ++i) {
+        danhSachNV[i]->xuatThongTin();
+        cout << "-------------------------------------------" << endl;
+    }
+
+    return 0;
+}
