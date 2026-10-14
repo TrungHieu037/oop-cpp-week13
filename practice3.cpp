@@ -5,7 +5,6 @@ using namespace std;
 
 const int MAX_NHAN_VIEN = 100;
 
-// Lớp cơ sở Nhân viên
 class NhanVien {
 protected:
     string maCCCD;
@@ -26,7 +25,7 @@ public:
     }
 
     virtual double tinhThuNhap() const { return 0.0; }
-    virtual int dinhDanhLoai() const { return 0; } // 0: Base, 1: Theo gio, 2: Theo thang
+    virtual int dinhDanhLoai() const { return 0; }
 
     string getCCCD() const { return maCCCD; }
     string getSDT() const { return soDienThai; }
@@ -37,7 +36,6 @@ public:
     void setDiaChi(const string& diaChi) { diaChiNha = diaChi; }
 };
 
-// Lớp Nhân viên làm theo giờ
 class NhanVienTheoGio : public NhanVien {
 private:
     int gioLamViec;
@@ -67,7 +65,6 @@ public:
     void setMucLuongGio(double dg) { mucLuongGio = dg; }
 };
 
-// Lớp Nhân viên làm theo tháng
 class NhanVienTheoThang : public NhanVien {
 private:
     double luongCoSo;
@@ -98,9 +95,6 @@ public:
     double getHeSoThuongCoDinh() const { return heSoThuongCoDinh; }
 };
 
-// =========================================================
-// STRUCT QUẢN LÝ XỬ LÝ DANH SÁCH (TẠO NÉT KHÁC BIỆT CHUYÊN NGHIỆP)
-// =========================================================
 struct QuanLyNhanVien {
 
     static double tinhTongNganSach(NhanVien* ds[], int sl) {
@@ -154,7 +148,6 @@ struct QuanLyNhanVien {
         if (!timThay) cout << "-> Khong co nhan vien nao dat muc luong tren." << endl;
     }
 
-    // Sắp xếp giảm dần bằng Thuật toán Insertion Sort (Khác hẳn Bubble/Selection Sort)
     static void sapXepThuNhapGiamDan(NhanVien* ds[], int sl) {
         for (int i = 1; i < sl; ++i) {
             NhanVien* key = ds[i];
@@ -168,9 +161,7 @@ struct QuanLyNhanVien {
     }
 };
 
-// ================= HÀM MAIN =================
 int main() {
-    // Khởi tạo các nhân viên lẻ
     NhanVien nvGoc("079123456789", "0901234567", "TP. Ho Chi Minh");
     NhanVienTheoGio nvGio1("079876543210", "0908765432", "Ha Noi", 160, 50000);
     NhanVienTheoThang nvThang1("079987654321", "0909998887", "Da Nang", 15000000, 2000000, 1.2);
@@ -180,7 +171,6 @@ int main() {
     nvGio1.xuatThongTin(); cout << endl;
     nvThang1.xuatThongTin(); cout << endl;
 
-    // Khởi tạo danh sách
     NhanVienTheoGio nvGio2("079111111111", "0901111111", "Thua Thien Hue", 100, 60000);
     NhanVienTheoThang nvThang2("079222222222", "0902222222", "Can Tho", 8000000, 1000000, 0.5);
 
@@ -215,7 +205,7 @@ int main() {
     QuanLyNhanVien::traCuuTheoMucLuong(danhSachNV, soLuong, nguong);
 
     QuanLyNhanVien::sapXepThuNhapGiamDan(danhSachNV, soLuong);
-    cout << "\n--- DANH SACH THU NHAP GIAM DAN (INSERTION SORT) ---" << endl;
+    cout << "\n--- DANH SACH THU NHAP GIAM DAN ---" << endl;
     for (int i = 0; i < soLuong; ++i) {
         danhSachNV[i]->xuatThongTin();
         cout << "-------------------------------------------" << endl;
